@@ -1,7 +1,7 @@
 using Walks.Data;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("Walks");
+var connectionString = builder.Configuration.GetConnectionString("Walks") ?? "Data Source=Walks.db";
 
 // Add services to the container.
 
