@@ -23,4 +23,17 @@ public class RegionsController : ControllerBase
 
         return Ok(regions);
     }
+
+    // GET REGION BY ID
+    [HttpGet("{id}", Name = "GetRegion")]
+    public IActionResult GetById(Guid id)
+    {
+        // var region = dbContext.Regions.Find(id); // Yo can only use the id as parameter
+        var region = dbContext.Regions.FirstOrDefault(x => x.Id == id); // Better
+        if (region == null)
+        {
+            return NotFound();
+        }
+        return Ok(region);
+    }
 }
