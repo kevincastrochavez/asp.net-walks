@@ -1,4 +1,4 @@
-namespace Walks.Models.Domain
+namespace Walks.Models.Domain;
 
 public class Region
 {
