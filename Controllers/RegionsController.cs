@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Walks.Models.Domain;
+using Walks.Data;
 
 namespace Walks.Controllers;
 
@@ -7,34 +8,18 @@ namespace Walks.Controllers;
 [Route("[controller]")]
 public class RegionsController : ControllerBase
 {
+    // Inject the WalksDbContext in the controller to access the database
+    private readonly WalksDbContext dbContext;
+    public RegionsController(WalksDbContext dbContext)
+    {
+        this.dbContext = dbContext;
+    }
+
     // GET ALL REGIONS
     [HttpGet(Name = "GetAllRegions")]
     public IActionResult GetAll()
     {
-        var regions = new List<Region>
-        {
-            new Region
-            {
-                Id = Guid.NewGuid(),
-                Code = "AB",
-                Name = "Alberta",
-                RegionImageUrl = "https://via.placeholder.com/100"
-            },
-            new Region
-            {
-                Id = Guid.NewGuid(),
-                Code = "BC",
-                Name = "British Columbia",
-                RegionImageUrl = "https://via.placeholder.com/100"
-            },
-            new Region
-            {
-                Id = Guid.NewGuid(),
-                Code = "SK",
-                Name = "Saskatchewan",
-                RegionImageUrl = "https://via.placeholder.com/100"
-            }
-        };
+        var regions = dbContext.Regions.ToList();
 
         return Ok(regions);
     }
