@@ -64,4 +64,33 @@ public class RegionsController : ControllerBase
         // Return DTO
         return Ok(regionDTO);
     }
+
+    // CREATE REGION
+    [HttpPost(Name = "CreateRegion")]
+    public IActionResult Create([FromBody] AddRegionDto addRegionDto)
+    {
+        // Create domain model
+        var regionModel = new Region
+        {
+            Code = addRegionDto.Code,
+            Name = addRegionDto.Name,
+            RegionImageUrl = addRegionDto.RegionImageUrl
+        };
+
+        // Add to db
+        dbContext.Regions.Add(regionModel);
+        dbContext.SaveChanges();
+
+        // Map domain model to DTO
+        var regionDTO = new RegionDTO
+        {
+            Id = regionModel.Id,
+            Code = regionModel.Code,
+            Name = regionModel.Name,
+            RegionImageUrl = regionModel.RegionImageUrl
+        };
+
+        // Return DTO
+        return CreatedAtAction(nameof(GetById), new { id = regionModel.Id }, regionDTO);
+    }
 }

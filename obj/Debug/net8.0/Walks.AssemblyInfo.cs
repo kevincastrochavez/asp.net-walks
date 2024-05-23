@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Walks")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f2e37cf245414374c2ec1366436c42d5654a8823")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2ec16867481cc58867d6e134758b0ef88dc3357a")]
 [assembly: System.Reflection.AssemblyProductAttribute("Walks")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Walks")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
