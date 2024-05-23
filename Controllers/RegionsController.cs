@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Walks.Models.Domain;
+using Walks.Models.DTO;
 using Walks.Data;
 
 namespace Walks.Controllers;
@@ -19,9 +20,25 @@ public class RegionsController : ControllerBase
     [HttpGet(Name = "GetAllRegions")]
     public IActionResult GetAll()
     {
-        var regions = dbContext.Regions.ToList();
+        // Get data from db
+        var regionsModel = dbContext.Regions.ToList();
 
-        return Ok(regions);
+        // Map domain models to DTOs
+        var regionsDTO = new List<RegionDTO>();
+        foreach (var regionModel in regionsModel)
+        {
+            regionsDTO.Add(new RegionDTO
+            {
+                Id = regionModel.Id,
+                Code = regionModel.Code,
+                Name = regionModel.Name,
+                RegionImageUrl = regionModel.RegionImageUrl
+            });
+        }
+
+        // Return DTOs
+
+        return Ok(regionsDTO);
     }
 
     // GET REGION BY ID
@@ -29,11 +46,22 @@ public class RegionsController : ControllerBase
     public IActionResult GetById(Guid id)
     {
         // var region = dbContext.Regions.Find(id); // Yo can only use the id as parameter
-        var region = dbContext.Regions.FirstOrDefault(x => x.Id == id); // Better
-        if (region == null)
+        var regionModel = dbContext.Regions.FirstOrDefault(x => x.Id == id); // Better
+        if (regionModel == null)
         {
             return NotFound();
         }
-        return Ok(region);
+
+        // Map domain model to DTO
+        var regionDTO = new RegionDTO
+        {
+            Id = regionModel.Id,
+            Code = regionModel.Code,
+            Name = regionModel.Name,
+            RegionImageUrl = regionModel.RegionImageUrl
+        };
+
+        // Return DTO
+        return Ok(regionDTO);
     }
 }
