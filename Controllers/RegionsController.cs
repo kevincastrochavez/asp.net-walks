@@ -44,10 +44,10 @@ public class RegionsController : ControllerBase
 
     // GET REGION BY ID
     [HttpGet("{id}", Name = "GetRegion")]
-    public IActionResult GetById(Guid id)
+    public async Task<IActionResult> GetById(Guid id)
     {
         // var region = dbContext.Regions.Find(id); // Yo can only use the id as parameter
-        var regionModel = dbContext.Regions.FirstOrDefault(x => x.Id == id); // Better
+        var regionModel = await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id); // Better
         if (regionModel == null)
         {
             return NotFound();
