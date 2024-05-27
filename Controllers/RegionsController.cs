@@ -51,7 +51,8 @@ public class RegionsController : ControllerBase
     public async Task<IActionResult> GetById(Guid id)
     {
         // var region = dbContext.Regions.Find(id); // Yo can only use the id as parameter
-        var regionModel = await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id); // Better
+        // var regionModel = await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id); // Better
+        var regionModel = await regionRepository.GetByIdAsync(id);
         if (regionModel == null)
         {
             return NotFound();

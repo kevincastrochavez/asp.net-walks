@@ -1,5 +1,6 @@
 namespace Walks.Repositories;
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -17,5 +18,10 @@ public class SQLiteRegionRepository : IRegionRepository
     public async Task<List<Region>> GetAllAsync()
     {
         return await dbContext.Regions.ToListAsync();
+    }
+
+    public async Task<Region?> GetByIdAsync(Guid id)
+    {
+        return await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
     }
 }

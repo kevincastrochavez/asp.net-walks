@@ -5,4 +5,6 @@ using Walks.Models.Domain;
 public interface IRegionRepository
 {
     Task<List<Region>> GetAllAsync();
+
+    Task<Region?> GetByIdAsync(Guid id);
 }
