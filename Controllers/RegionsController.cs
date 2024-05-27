@@ -60,25 +60,14 @@ public class RegionsController : ControllerBase
     [HttpPost(Name = "CreateRegion")]
     public async Task<IActionResult> Create([FromBody] AddRegionDto addRegionDto)
     {
-        // Create domain model
-        var regionModel = new Region
-        {
-            Code = addRegionDto.Code,
-            Name = addRegionDto.Name,
-            RegionImageUrl = addRegionDto.RegionImageUrl
-        };
+        // Map DTO to domain model
+        var regionModel = mapper.Map<Region>(addRegionDto);
 
         // Add to db
         regionModel = await regionRepository.CreateAsync(regionModel);
 
         // Map domain model to DTO
-        var regionDTO = new RegionDTO
-        {
-            Id = regionModel.Id,
-            Code = regionModel.Code,
-            Name = regionModel.Name,
-            RegionImageUrl = regionModel.RegionImageUrl
-        };
+        var regionDTO = mapper.Map<RegionDTO>(regionModel);
 
         // Return DTO
         return CreatedAtAction(nameof(GetById), new { id = regionModel.Id }, regionDTO);
