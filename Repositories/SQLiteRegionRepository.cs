@@ -31,4 +31,20 @@ public class SQLiteRegionRepository : IRegionRepository
     {
         return await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
     }
+
+    public async Task<Region?> UpdateAsync(Guid id, Region region)
+    {
+        var existingRegion = await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
+        if (existingRegion == null)
+        {
+            return null;
+        }
+
+        existingRegion.Code = region.Code;
+        existingRegion.Name = region.Name;
+        existingRegion.RegionImageUrl = region.RegionImageUrl;
+
+        await dbContext.SaveChangesAsync();
+        return existingRegion;
+    }
 }

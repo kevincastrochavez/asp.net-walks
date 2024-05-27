@@ -103,20 +103,20 @@ public class RegionsController : ControllerBase
     [HttpPut("{id}", Name = "UpdateRegion")]
     public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionDto updateRegionDto)
     {
-        // Get region from db
-        var regionModel = await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
+        // Map DTO to domain model
+        var regionModel = new Region
+        {
+            Code = updateRegionDto.Code,
+            Name = updateRegionDto.Name,
+            RegionImageUrl = updateRegionDto.RegionImageUrl
+        };
+
+        // Check if region exists
+        regionModel = await regionRepository.UpdateAsync(id, regionModel);
         if (regionModel == null)
         {
             return NotFound();
         }
-
-        // Update domain model
-        regionModel.Code = updateRegionDto.Code;
-        regionModel.Name = updateRegionDto.Name;
-        regionModel.RegionImageUrl = updateRegionDto.RegionImageUrl;
-
-        // Save to db
-        await dbContext.SaveChangesAsync();
 
         // Map domain model to DTO
         var regionDTO = new RegionDTO
