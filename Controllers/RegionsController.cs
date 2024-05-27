@@ -50,13 +50,7 @@ public class RegionsController : ControllerBase
         }
 
         // Map domain model to DTO
-        var regionDTO = new RegionDTO
-        {
-            Id = regionModel.Id,
-            Code = regionModel.Code,
-            Name = regionModel.Name,
-            RegionImageUrl = regionModel.RegionImageUrl
-        };
+        var regionDTO = mapper.Map<RegionDTO>(regionModel);
 
         // Return DTO
         return Ok(regionDTO);

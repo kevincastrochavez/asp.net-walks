@@ -126,3 +126,4 @@
 /Users/kevincastro/Desktop/Programs/web-api-course/Walks/obj/Debug/net8.0/Walks.pdb
 /Users/kevincastro/Desktop/Programs/web-api-course/Walks/obj/Debug/net8.0/Walks.genruntimeconfig.cache
 /Users/kevincastro/Desktop/Programs/web-api-course/Walks/obj/Debug/net8.0/ref/Walks.dll
+/Users/kevincastro/Desktop/Programs/web-api-course/Walks/bin/Debug/net8.0/AutoMapper.dll
