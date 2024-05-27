@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Walks.Models.Domain;
 using Walks.Models.DTO;
 using Walks.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Walks.Controllers;
 
@@ -18,10 +19,10 @@ public class RegionsController : ControllerBase
 
     // GET ALL REGIONS
     [HttpGet(Name = "GetAllRegions")]
-    public IActionResult GetAll()
+    public async Task<IActionResult> GetAll()
     {
         // Get data from db
-        var regionsModel = dbContext.Regions.ToList();
+        var regionsModel = await dbContext.Regions.ToListAsync();
 
         // Map domain models to DTOs
         var regionsDTO = new List<RegionDTO>();
