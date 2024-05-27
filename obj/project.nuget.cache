@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "wrJJ3AVS0UnHdC37Y2JrDLNkcVSEnZo1Vd8dG0/zzl0zVYP4L2TYZ0LTPKO4KuXGgZBqpHET1XssyVj3MYiJCA==",
+  "dgSpecHash": "hED1Rjlon+3sN3h/2hzORgnkfl/zeveN6CNoeFJ6lRu8a8QNP73G+C3DBBS9QW1yhiTwZQ6ZHb2+3SziC2ofKA==",
   "success": true,
   "projectFilePath": "/Users/kevincastro/Desktop/Programs/web-api-course/Walks/Walks.csproj",
   "expectedPackageFiles": [
+    "/Users/kevincastro/.nuget/packages/automapper/13.0.1/automapper.13.0.1.nupkg.sha512",
     "/Users/kevincastro/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/kevincastro/.nuget/packages/microsoft.bcl.asyncinterfaces/6.0.0/microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
     "/Users/kevincastro/.nuget/packages/microsoft.codeanalysis.analyzers/3.3.3/microsoft.codeanalysis.analyzers.3.3.3.nupkg.sha512",
