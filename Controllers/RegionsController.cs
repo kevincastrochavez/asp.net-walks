@@ -68,7 +68,7 @@ public class RegionsController : ControllerBase
 
     // CREATE REGION
     [HttpPost(Name = "CreateRegion")]
-    public IActionResult Create([FromBody] AddRegionDto addRegionDto)
+    public async Task<IActionResult> Create([FromBody] AddRegionDto addRegionDto)
     {
         // Create domain model
         var regionModel = new Region
@@ -79,8 +79,8 @@ public class RegionsController : ControllerBase
         };
 
         // Add to db
-        dbContext.Regions.Add(regionModel);
-        dbContext.SaveChanges();
+        await dbContext.Regions.AddAsync(regionModel);
+        await dbContext.SaveChangesAsync();
 
         // Map domain model to DTO
         var regionDTO = new RegionDTO
