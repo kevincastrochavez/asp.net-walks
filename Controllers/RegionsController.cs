@@ -78,12 +78,7 @@ public class RegionsController : ControllerBase
     public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionDto updateRegionDto)
     {
         // Map DTO to domain model
-        var regionModel = new Region
-        {
-            Code = updateRegionDto.Code,
-            Name = updateRegionDto.Name,
-            RegionImageUrl = updateRegionDto.RegionImageUrl
-        };
+        var regionModel = mapper.Map<Region>(updateRegionDto);
 
         // Check if region exists
         regionModel = await regionRepository.UpdateAsync(id, regionModel);
@@ -93,13 +88,7 @@ public class RegionsController : ControllerBase
         }
 
         // Map domain model to DTO
-        var regionDTO = new RegionDTO
-        {
-            Id = regionModel.Id,
-            Code = regionModel.Code,
-            Name = regionModel.Name,
-            RegionImageUrl = regionModel.RegionImageUrl
-        };
+        var regionDTO = mapper.Map<RegionDTO>(regionModel);
 
         // Return DTO
         return Ok(regionDTO);
