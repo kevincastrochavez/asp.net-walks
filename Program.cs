@@ -1,4 +1,5 @@
 using Walks.Data;
+using Walks.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("Walks") ?? "Data Source=Walks.db";
@@ -7,6 +8,7 @@ var connectionString = builder.Configuration.GetConnectionString("Walks") ?? "Da
 
 builder.Services.AddControllers();
 builder.Services.AddSqlite<WalksDbContext>(connectionString);
+builder.Services.AddScoped<IRegionRepository, SQLiteRegionRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

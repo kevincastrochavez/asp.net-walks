@@ -3,6 +3,7 @@ using Walks.Models.Domain;
 using Walks.Models.DTO;
 using Walks.Data;
 using Microsoft.EntityFrameworkCore;
+using Walks.Repositories;
 
 namespace Walks.Controllers;
 
@@ -12,9 +13,12 @@ public class RegionsController : ControllerBase
 {
     // Inject the WalksDbContext in the controller to access the database
     private readonly WalksDbContext dbContext;
-    public RegionsController(WalksDbContext dbContext)
+    private readonly IRegionRepository regionRepository;
+
+    public RegionsController(WalksDbContext dbContext, IRegionRepository regionRepository)
     {
         this.dbContext = dbContext;
+        this.regionRepository = regionRepository;
     }
 
     // GET ALL REGIONS
@@ -22,7 +26,7 @@ public class RegionsController : ControllerBase
     public async Task<IActionResult> GetAll()
     {
         // Get data from db
-        var regionsModel = await dbContext.Regions.ToListAsync();
+        var regionsModel = await regionRepository.GetAllAsync();
 
         // Map domain models to DTOs
         var regionsDTO = new List<RegionDTO>();
