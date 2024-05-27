@@ -9,5 +9,6 @@ public interface IRegionRepository
     Task<Region?> GetByIdAsync(Guid id);
     Task<Region> CreateAsync(Region region);
     Task<Region?> UpdateAsync(Guid id, Region region);
+    Task<Region?> DeleteAsync(Guid id);
 }
 // The nullable keyword is used to indicate that a property can be null, because they may not exist in the database.

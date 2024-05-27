@@ -136,15 +136,11 @@ public class RegionsController : ControllerBase
     public async Task<IActionResult> Delete([FromRoute] Guid id)
     {
         // Get region from db
-        var regionModel = await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
+        var regionModel = await regionRepository.DeleteAsync(id);
         if (regionModel == null)
         {
             return NotFound();
         }
-
-        // Remove from db
-        dbContext.Regions.Remove(regionModel);
-        await dbContext.SaveChangesAsync();
 
         var regionDTO = new RegionDTO
         {
@@ -154,7 +150,7 @@ public class RegionsController : ControllerBase
             RegionImageUrl = regionModel.RegionImageUrl
         };
 
-        // return Ok(regionDTO);
-        return NoContent();
+        // return NoContent();
+        return Ok(regionDTO);
     }
 }

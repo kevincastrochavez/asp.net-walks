@@ -22,6 +22,20 @@ public class SQLiteRegionRepository : IRegionRepository
         return region;
     }
 
+    public async Task<Region?> DeleteAsync(Guid id)
+    {
+        var existingRegion = await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
+        if (existingRegion == null)
+        {
+            return null;
+        }
+
+        // Remove from db
+        dbContext.Regions.Remove(existingRegion);
+        await dbContext.SaveChangesAsync();
+        return existingRegion;
+    }
+
     public async Task<List<Region>> GetAllAsync()
     {
         return await dbContext.Regions.ToListAsync();
