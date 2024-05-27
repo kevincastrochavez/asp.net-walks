@@ -129,10 +129,10 @@ public class RegionsController : ControllerBase
 
     // DELETE REGION
     [HttpDelete("{id}", Name = "DeleteRegion")]
-    public IActionResult Delete([FromRoute] Guid id)
+    public async Task<IActionResult> Delete([FromRoute] Guid id)
     {
         // Get region from db
-        var regionModel = dbContext.Regions.FirstOrDefault(x => x.Id == id);
+        var regionModel = await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
         if (regionModel == null)
         {
             return NotFound();
@@ -140,7 +140,7 @@ public class RegionsController : ControllerBase
 
         // Remove from db
         dbContext.Regions.Remove(regionModel);
-        dbContext.SaveChanges();
+        await dbContext.SaveChangesAsync();
 
         var regionDTO = new RegionDTO
         {
