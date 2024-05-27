@@ -105,13 +105,8 @@ public class RegionsController : ControllerBase
             return NotFound();
         }
 
-        var regionDTO = new RegionDTO
-        {
-            Id = regionModel.Id,
-            Code = regionModel.Code,
-            Name = regionModel.Name,
-            RegionImageUrl = regionModel.RegionImageUrl
-        };
+        // Map domain model to DTO
+        var regionDTO = mapper.Map<RegionDTO>(regionModel);
 
         // return NoContent();
         return Ok(regionDTO);
