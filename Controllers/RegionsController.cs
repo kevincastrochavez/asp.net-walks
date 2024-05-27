@@ -97,10 +97,10 @@ public class RegionsController : ControllerBase
 
     // UPDATE REGION
     [HttpPut("{id}", Name = "UpdateRegion")]
-    public IActionResult Update([FromRoute] Guid id, [FromBody] UpdateRegionDto updateRegionDto)
+    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionDto updateRegionDto)
     {
         // Get region from db
-        var regionModel = dbContext.Regions.FirstOrDefault(x => x.Id == id);
+        var regionModel = await dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
         if (regionModel == null)
         {
             return NotFound();
@@ -112,7 +112,7 @@ public class RegionsController : ControllerBase
         regionModel.RegionImageUrl = updateRegionDto.RegionImageUrl;
 
         // Save to db
-        dbContext.SaveChanges();
+        await dbContext.SaveChangesAsync();
 
         // Map domain model to DTO
         var regionDTO = new RegionDTO
