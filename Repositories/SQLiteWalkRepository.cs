@@ -51,4 +51,19 @@ public class SQLiteWalkRepository : IWalkRepository
 
         return existingWalk;
     }
+
+    public async Task<Walk?> DeleteAsync(Guid id)
+    {
+        var existingWalk = await dbContext.Walks.FirstOrDefaultAsync(x => x.Id == id);
+        if (existingWalk == null)
+        {
+            return null;
+        }
+
+        // Remove from db
+        dbContext.Walks.Remove(existingWalk);
+        await dbContext.SaveChangesAsync();
+
+        return existingWalk;
+    }
 }
