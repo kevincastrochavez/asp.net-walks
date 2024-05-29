@@ -12,10 +12,22 @@ public class SQLiteWalkRepository : IWalkRepository
         this.dbContext = dbContext;
     }
 
-    public async Task<List<Walk>> GetAllAsync()
+    public async Task<List<Walk>> GetAllAsync(string? filterOn = null, string? filterQuery = null)
     {
+        var walks = dbContext.Walks.Include(x => x.Region).Include(x => x.Difficulty).AsQueryable();
+
+        // Filter
+        if (!string.IsNullOrEmpty(filterQuery) && !string.IsNullOrEmpty(filterOn))
+        {
+            if (filterOn.Equals("Name", StringComparison.OrdinalIgnoreCase))
+            {
+                walks = walks.Where(x => x.Name.Contains(filterQuery));
+            }
+        }
+
         // Navitgation properties can have these two syntaxes - Include("Region") or Include(x => x.Region)
-        return await dbContext.Walks.Include("Region").Include(x => x.Difficulty).ToListAsync();
+        // return await dbContext.Walks.Include("Region").Include(x => x.Difficulty).ToListAsync();
+        return await walks.ToListAsync();
     }
 
     public async Task<Walk?> GetByIdAsync(Guid id)
