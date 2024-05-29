@@ -52,4 +52,22 @@ public class WalksController : ControllerBase
 
         return Ok(walkDTO);
     }
+
+    [HttpPut("{id}", Name = "UpdateWalk")]
+    public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateWalksDto updateWalkDto)
+    {
+        // Map DTO to domain model
+        var walkModel = mapper.Map<Walk>(updateWalkDto);
+        walkModel.Id = id;
+        walkModel = await walkRepository.UpdateAsync(id, walkModel);
+        if (walkModel == null)
+        {
+            return NotFound();
+        }
+
+        // Map domain model to DTO
+        var walkDTO = mapper.Map<WalkDto>(walkModel);
+
+        return Ok(walkDTO);
+    }
 }
