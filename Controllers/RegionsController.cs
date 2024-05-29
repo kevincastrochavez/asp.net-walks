@@ -58,14 +58,9 @@ public class RegionsController : ControllerBase
 
     // CREATE REGION
     [HttpPost(Name = "CreateRegion")]
+    [ValidateModel] // Custom validation, see CustomActionFilters. Same way as in update method
     public async Task<IActionResult> Create([FromBody] AddRegionDto addRegionDto)
     {
-        // Validation using the Data Annotations
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-
         // Map DTO to domain model
         var regionModel = mapper.Map<Region>(addRegionDto);
 
