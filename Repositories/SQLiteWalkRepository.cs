@@ -12,7 +12,7 @@ public class SQLiteWalkRepository : IWalkRepository
         this.dbContext = dbContext;
     }
 
-    public async Task<List<Walk>> GetAllAsync(string? filterOn = null, string? filterQuery = null)
+    public async Task<List<Walk>> GetAllAsync(string? filterOn = null, string? filterQuery = null, string? sortBy = null, bool? isAscending = true)
     {
         var walks = dbContext.Walks.Include(x => x.Region).Include(x => x.Difficulty).AsQueryable();
 
@@ -22,6 +22,19 @@ public class SQLiteWalkRepository : IWalkRepository
             if (filterOn.Equals("Name", StringComparison.OrdinalIgnoreCase))
             {
                 walks = walks.Where(x => x.Name.Contains(filterQuery));
+            }
+        }
+
+        // Sort
+        if (!string.IsNullOrEmpty(sortBy))
+        {
+            if (sortBy.Equals("Name", StringComparison.OrdinalIgnoreCase))
+            {
+                walks = isAscending == true ? walks.OrderBy(x => x.Name) : walks.OrderByDescending(x => x.Name);
+            }
+            else if (sortBy.Equals("Length", StringComparison.OrdinalIgnoreCase))
+            {
+                walks = isAscending == true ? walks.OrderBy(x => x.LengthInKm) : walks.OrderByDescending(x => x.LengthInKm);
             }
         }
 
