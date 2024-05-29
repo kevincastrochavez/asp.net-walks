@@ -21,6 +21,7 @@ public class SQLiteWalkRepository : IWalkRepository
 
     public async Task<List<Walk>> GetAllAsync()
     {
-        return await dbContext.Walks.ToListAsync();
+        // Navitgation properties can have these two syntaxes - Include("Region") or Include(x => x.Region)
+        return await dbContext.Walks.Include("Region").Include(x => x.Difficulty).ToListAsync();
     }
 }
