@@ -5,11 +5,13 @@ using Walks.Data;
 using Microsoft.EntityFrameworkCore;
 using Walks.Repositories;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Walks.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize]
 public class RegionsController : ControllerBase
 {
     // Inject the WalksDbContext in the controller to access the database
