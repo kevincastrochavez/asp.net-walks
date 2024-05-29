@@ -60,6 +60,12 @@ public class RegionsController : ControllerBase
     [HttpPost(Name = "CreateRegion")]
     public async Task<IActionResult> Create([FromBody] AddRegionDto addRegionDto)
     {
+        // Validation using the Data Annotations
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
         // Map DTO to domain model
         var regionModel = mapper.Map<Region>(addRegionDto);
 
@@ -77,6 +83,12 @@ public class RegionsController : ControllerBase
     [HttpPut("{id}", Name = "UpdateRegion")]
     public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionDto updateRegionDto)
     {
+        // Validation using the Data Annotations
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
         // Map DTO to domain model
         var regionModel = mapper.Map<Region>(updateRegionDto);
 

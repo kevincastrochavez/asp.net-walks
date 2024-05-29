@@ -43,6 +43,12 @@ public class WalksController : ControllerBase
     [HttpPost(Name = "CreateWalk")]
     public async Task<IActionResult> Create([FromBody] AddWalksDto addWalkDto)
     {
+        // Validation using the Data Annotations
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
         // Map DTO to domain model
         var walkModel = mapper.Map<Walk>(addWalkDto);
         await walkRepository.CreateAsync(walkModel);
@@ -56,6 +62,12 @@ public class WalksController : ControllerBase
     [HttpPut("{id}", Name = "UpdateWalk")]
     public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateWalksDto updateWalkDto)
     {
+        // Validation using the Data Annotations
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
         // Map DTO to domain model
         var walkModel = mapper.Map<Walk>(updateWalkDto);
         walkModel.Id = id;
