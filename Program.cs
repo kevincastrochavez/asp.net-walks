@@ -1,5 +1,6 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Walks.Data;
 using Walks.Mappings;
@@ -18,6 +19,21 @@ builder.Services.AddSqlite<WalksAuthDbContext>(connectionStringWalksAuth);
 builder.Services.AddScoped<IRegionRepository, SQLiteRegionRepository>();
 builder.Services.AddScoped<IWalkRepository, SQLiteWalkRepository>();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
+builder.Services.AddIdentityCore<IdentityUser>()
+    .AddRoles<IdentityRole>()
+    .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>("WalksAuth")
+    .AddEntityFrameworkStores<WalksAuthDbContext>()
+    .AddDefaultTokenProviders();
+// Password settings
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 8;
+    options.Password.RequiredUniqueChars = 1;
+});
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
 {
     ValidateIssuer = true,
