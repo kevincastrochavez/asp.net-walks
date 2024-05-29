@@ -19,11 +19,11 @@ public class WalksController : ControllerBase
     }
 
     [HttpGet(Name = "GetAllWalks")]
-    // api/walks?filterOn=Name&filterQuery=Track
-    public async Task<IActionResult> GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery, [FromQuery] string? sortBy, [FromQuery] bool? isAscending)
+    // api/walks?filterOn=Name&filterQuery=Track&sortBy=Name&isAscending=false&pageNumber=1&pageSize=10
+    public async Task<IActionResult> GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery, [FromQuery] string? sortBy, [FromQuery] bool? isAscending, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
     {
         // ?? is the null coalescing operator, which returns the right-hand side if the left-hand side is null
-        var walksModel = await walkRepository.GetAllAsync(filterOn, filterQuery, sortBy, isAscending ?? true);
+        var walksModel = await walkRepository.GetAllAsync(filterOn, filterQuery, sortBy, isAscending ?? true, pageNumber, pageSize);
         var walksDTO = mapper.Map<List<WalkDto>>(walksModel);
 
         return Ok(walksDTO);

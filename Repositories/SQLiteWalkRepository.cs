@@ -12,7 +12,7 @@ public class SQLiteWalkRepository : IWalkRepository
         this.dbContext = dbContext;
     }
 
-    public async Task<List<Walk>> GetAllAsync(string? filterOn = null, string? filterQuery = null, string? sortBy = null, bool? isAscending = true)
+    public async Task<List<Walk>> GetAllAsync(string? filterOn = null, string? filterQuery = null, string? sortBy = null, bool? isAscending = true, int pageNumber = 1, int pageSize = 10)
     {
         var walks = dbContext.Walks.Include(x => x.Region).Include(x => x.Difficulty).AsQueryable();
 
@@ -37,6 +37,10 @@ public class SQLiteWalkRepository : IWalkRepository
                 walks = isAscending == true ? walks.OrderBy(x => x.LengthInKm) : walks.OrderByDescending(x => x.LengthInKm);
             }
         }
+
+        // Pagination(Skip and Take syntax, where Skip is the number of records to skip and Take is the number of records to take)
+        var skip = (pageNumber - 1) * pageSize;
+        walks = walks.Skip(skip).Take(pageSize);
 
         // Navitgation properties can have these two syntaxes - Include("Region") or Include(x => x.Region)
         // return await dbContext.Walks.Include("Region").Include(x => x.Difficulty).ToListAsync();
