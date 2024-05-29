@@ -7,12 +7,14 @@ using Walks.Models.DTO;
 using Walks.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("Walks") ?? "Data Source=Walks.db";
+var connectionStringWalks = builder.Configuration.GetConnectionString("Walks") ?? "Data Source=Walks.db";
+var connectionStringWalksAuth = builder.Configuration.GetConnectionString("WalksAuth") ?? "Data Source=WalksAuth.db";
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddSqlite<WalksDbContext>(connectionString);
+builder.Services.AddSqlite<WalksDbContext>(connectionStringWalks);
+builder.Services.AddSqlite<WalksAuthDbContext>(connectionStringWalksAuth);
 builder.Services.AddScoped<IRegionRepository, SQLiteRegionRepository>();
 builder.Services.AddScoped<IWalkRepository, SQLiteWalkRepository>();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
