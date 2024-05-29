@@ -27,6 +27,19 @@ public class WalksController : ControllerBase
         return Ok(walksDTO);
     }
 
+    [HttpGet("{id}", Name = "GetWalk")]
+    public async Task<IActionResult> GetById([FromRoute] Guid id)
+    {
+        var walkModel = await walkRepository.GetByIdAsync(id);
+        if (walkModel == null)
+        {
+            return NotFound();
+        }
+
+        var walkDTO = mapper.Map<WalkDto>(walkModel);
+        return Ok(walkDTO);
+    }
+
     [HttpPost(Name = "CreateWalk")]
     public async Task<IActionResult> Create([FromBody] AddWalksDto addWalkDto)
     {

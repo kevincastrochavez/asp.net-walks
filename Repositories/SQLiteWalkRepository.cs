@@ -12,6 +12,20 @@ public class SQLiteWalkRepository : IWalkRepository
         this.dbContext = dbContext;
     }
 
+    public async Task<List<Walk>> GetAllAsync()
+    {
+        // Navitgation properties can have these two syntaxes - Include("Region") or Include(x => x.Region)
+        return await dbContext.Walks.Include("Region").Include(x => x.Difficulty).ToListAsync();
+    }
+
+    public async Task<Walk?> GetByIdAsync(Guid id)
+    {
+        return await dbContext.Walks
+            .Include(x => x.Region)
+            .Include(x => x.Difficulty)
+            .FirstOrDefaultAsync(x => x.Id == id);
+    }
+
     public async Task<Walk> CreateAsync(Walk walk)
     {
         await dbContext.Walks.AddAsync(walk);
@@ -19,9 +33,4 @@ public class SQLiteWalkRepository : IWalkRepository
         return walk;
     }
 
-    public async Task<List<Walk>> GetAllAsync()
-    {
-        // Navitgation properties can have these two syntaxes - Include("Region") or Include(x => x.Region)
-        return await dbContext.Walks.Include("Region").Include(x => x.Difficulty).ToListAsync();
-    }
 }
