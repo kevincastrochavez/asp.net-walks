@@ -46,4 +46,24 @@ public class AuthController : ControllerBase
 
         return Ok();
     }
+
+    [HttpPost("Login")]
+    public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
+    {
+        var identityUser = await userManager.FindByEmailAsync(loginDto.Username);
+
+        if (identityUser != null)
+        {
+            var checkPasswordResult = await userManager.CheckPasswordAsync(identityUser, loginDto.Password);
+
+            if (checkPasswordResult)
+            {
+                // Generate JWT
+
+                return Ok();
+            }
+        }
+
+        return BadRequest("Invalid username or password");
+    }
 }
