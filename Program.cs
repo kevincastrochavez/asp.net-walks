@@ -1,5 +1,6 @@
 using Walks.Data;
 using Walks.Mappings;
+using Walks.Models.DTO;
 using Walks.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,7 @@ var connectionString = builder.Configuration.GetConnectionString("Walks") ?? "Da
 builder.Services.AddControllers();
 builder.Services.AddSqlite<WalksDbContext>(connectionString);
 builder.Services.AddScoped<IRegionRepository, SQLiteRegionRepository>();
+builder.Services.AddScoped<IWalkRepository, SQLiteWalkRepository>();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
