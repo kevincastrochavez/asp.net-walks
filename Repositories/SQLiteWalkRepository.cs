@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Walks.Data;
 using Walks.Models.Domain;
 
@@ -16,5 +17,10 @@ public class SQLiteWalkRepository : IWalkRepository
         await dbContext.Walks.AddAsync(walk);
         await dbContext.SaveChangesAsync();
         return walk;
+    }
+
+    public async Task<List<Walk>> GetAllAsync()
+    {
+        return await dbContext.Walks.ToListAsync();
     }
 }

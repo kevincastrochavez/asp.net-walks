@@ -18,6 +18,14 @@ public class WalksController : ControllerBase
         this.walkRepository = walkRepository;
     }
 
+    [HttpGet(Name = "GetAllWalks")]
+    public async Task<IActionResult> GetAll()
+    {
+        var walksModel = await walkRepository.GetAllAsync();
+        var walksDTO = mapper.Map<List<WalkDto>>(walksModel);
+
+        return Ok(walksDTO);
+    }
 
     [HttpPost(Name = "CreateWalk")]
     public async Task<IActionResult> Create([FromBody] AddWalksDto addWalkDto)
