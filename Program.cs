@@ -18,6 +18,7 @@ builder.Services.AddSqlite<WalksDbContext>(connectionStringWalks);
 builder.Services.AddSqlite<WalksAuthDbContext>(connectionStringWalksAuth);
 builder.Services.AddScoped<IRegionRepository, SQLiteRegionRepository>();
 builder.Services.AddScoped<IWalkRepository, SQLiteWalkRepository>();
+builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 builder.Services.AddIdentityCore<IdentityUser>()
     .AddRoles<IdentityRole>()

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Walks.Models.DTO;
+using Walks.Repositories;
 
 namespace DotNetBungieAPI.Controllers;
 
@@ -9,10 +10,12 @@ namespace DotNetBungieAPI.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly UserManager<IdentityUser> userManager;
+    private readonly ITokenRepository tokenRepository;
 
-    public AuthController(UserManager<IdentityUser> userManager)
+    public AuthController(UserManager<IdentityUser> userManager, ITokenRepository tokenRepository)
     {
         this.userManager = userManager;
+        this.tokenRepository = tokenRepository;
     }
 
     [HttpPost(Name = "Register")]
@@ -58,9 +61,22 @@ public class AuthController : ControllerBase
 
             if (checkPasswordResult)
             {
-                // Generate JWT
+                // Get roles
+                var roles = await userManager.GetRolesAsync(identityUser);
 
-                return Ok();
+                if (roles != null)
+                {
+                    // Generate JWT
+                    var jwtToken = tokenRepository.CreateJWTToken(identityUser, roles.ToList());
+                    // In cases we need to return more information
+                    var response = new LoginResponseDto
+                    {
+                        JwtToken = jwtToken
+                    };
+
+                    return Ok(response);
+                }
+
             }
         }
 
