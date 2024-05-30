@@ -11,7 +11,6 @@ namespace Walks.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-[Authorize]
 public class RegionsController : ControllerBase
 {
     // Inject the WalksDbContext in the controller to access the database
@@ -28,6 +27,7 @@ public class RegionsController : ControllerBase
 
     // GET ALL REGIONS
     [HttpGet(Name = "GetAllRegions")]
+    [Authorize(Roles = "Reader")]
     public async Task<IActionResult> GetAll()
     {
         // Get data from db
@@ -41,6 +41,7 @@ public class RegionsController : ControllerBase
 
     // GET REGION BY ID
     [HttpGet("{id}", Name = "GetRegion")]
+    [Authorize(Roles = "Reader")]
     public async Task<IActionResult> GetById(Guid id)
     {
         // var region = dbContext.Regions.Find(id); // Yo can only use the id as parameter
@@ -60,6 +61,7 @@ public class RegionsController : ControllerBase
 
     // CREATE REGION
     [HttpPost(Name = "CreateRegion")]
+    [Authorize(Roles = "Writer")]
     [ValidateModel] // Custom validation, see CustomActionFilters. Same way as in update method
     public async Task<IActionResult> Create([FromBody] AddRegionDto addRegionDto)
     {
@@ -78,6 +80,7 @@ public class RegionsController : ControllerBase
 
     // UPDATE REGION
     [HttpPut("{id}", Name = "UpdateRegion")]
+    [Authorize(Roles = "Writer")]
     public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionDto updateRegionDto)
     {
         // Validation using the Data Annotations
@@ -105,6 +108,7 @@ public class RegionsController : ControllerBase
 
     // DELETE REGION
     [HttpDelete("{id}", Name = "DeleteRegion")]
+    [Authorize(Roles = "Writer")]
     public async Task<IActionResult> Delete([FromRoute] Guid id)
     {
         // Get region from db
