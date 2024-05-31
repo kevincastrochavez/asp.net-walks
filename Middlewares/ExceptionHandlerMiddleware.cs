@@ -2,6 +2,7 @@ using System.Net;
 
 namespace Walks.Middlewares;
 
+// This will catch any exceptions and return an error response
 public class ExceptionHandlerMiddleware
 {
     private readonly ILogger<ExceptionHandlerMiddleware> logger;
