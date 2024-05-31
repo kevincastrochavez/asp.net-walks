@@ -36,6 +36,9 @@ public class RegionsController : ControllerBase
         // Logging
         logger.LogInformation("Getting all regions method was called");
 
+        // Throw an exception for testing global exception handler
+        // throw new Exception("Something went wrong");
+
         // Get data from db
         var regionsModel = await regionRepository.GetAllAsync();
 

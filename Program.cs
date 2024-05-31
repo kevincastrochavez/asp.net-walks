@@ -7,6 +7,7 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using Walks.Data;
 using Walks.Mappings;
+using Walks.Middlewares;
 using Walks.Models.Domain;
 using Walks.Models.DTO;
 using Walks.Repositories;
@@ -105,6 +106,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
