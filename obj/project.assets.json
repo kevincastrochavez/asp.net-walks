@@ -1069,18 +1069,18 @@
           }
         }
       },
-      "Serilog.Sinks.File/5.0.0": {
+      "Serilog.Sinks.File/5.0.1-dev-00972": {
         "type": "package",
         "dependencies": {
           "Serilog": "2.10.0"
         },
         "compile": {
-          "lib/net5.0/Serilog.Sinks.File.dll": {
+          "lib/net6.0/Serilog.Sinks.File.dll": {
             "related": ".pdb;.xml"
           }
         },
         "runtime": {
-          "lib/net5.0/Serilog.Sinks.File.dll": {
+          "lib/net6.0/Serilog.Sinks.File.dll": {
             "related": ".pdb;.xml"
           }
         }
@@ -3401,10 +3401,10 @@
         "serilog.sinks.debug.nuspec"
       ]
     },
-    "Serilog.Sinks.File/5.0.0": {
-      "sha512": "uwV5hdhWPwUH1szhO8PJpFiahqXmzPzJT/sOijH/kFgUx+cyoDTMM8MHD0adw9+Iem6itoibbUXHYslzXsLEAg==",
+    "Serilog.Sinks.File/5.0.1-dev-00972": {
+      "sha512": "fIK2UIewc1meCDpL8pOJLy0QRe1IzqJ3cnSXjz7GpPVVCr715nFloa49QKeK4dFPDgQk9xU3zi3ioIVefSi0+Q==",
       "type": "package",
-      "path": "serilog.sinks.file/5.0.0",
+      "path": "serilog.sinks.file/5.0.1-dev-00972",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3415,6 +3415,9 @@
         "lib/net5.0/Serilog.Sinks.File.dll",
         "lib/net5.0/Serilog.Sinks.File.pdb",
         "lib/net5.0/Serilog.Sinks.File.xml",
+        "lib/net6.0/Serilog.Sinks.File.dll",
+        "lib/net6.0/Serilog.Sinks.File.pdb",
+        "lib/net6.0/Serilog.Sinks.File.xml",
         "lib/netstandard1.3/Serilog.Sinks.File.dll",
         "lib/netstandard1.3/Serilog.Sinks.File.pdb",
         "lib/netstandard1.3/Serilog.Sinks.File.xml",
@@ -3424,7 +3427,7 @@
         "lib/netstandard2.1/Serilog.Sinks.File.dll",
         "lib/netstandard2.1/Serilog.Sinks.File.pdb",
         "lib/netstandard2.1/Serilog.Sinks.File.xml",
-        "serilog.sinks.file.5.0.0.nupkg.sha512",
+        "serilog.sinks.file.5.0.1-dev-00972.nupkg.sha512",
         "serilog.sinks.file.nuspec"
       ]
     },
@@ -4108,6 +4111,7 @@
       "Serilog >= 4.0.0-dev-02201",
       "Serilog.AspNetCore >= 8.0.2-dev-00338",
       "Serilog.Sinks.Console >= 5.1.0-dev-00943",
+      "Serilog.Sinks.File >= 5.0.1-dev-00972",
       "Swashbuckle.AspNetCore >= 6.4.0",
       "System.IdentityModel.Tokens.Jwt >= 7.6.0"
     ]
@@ -4191,6 +4195,10 @@
           "Serilog.Sinks.Console": {
             "target": "Package",
             "version": "[5.1.0-dev-00943, )"
+          },
+          "Serilog.Sinks.File": {
+            "target": "Package",
+            "version": "[5.0.1-dev-00972, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
