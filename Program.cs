@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Walks.Data;
 using Walks.Mappings;
+using Walks.Models.Domain;
 using Walks.Models.DTO;
 using Walks.Repositories;
 
@@ -15,11 +16,15 @@ var connectionStringWalksAuth = builder.Configuration.GetConnectionString("Walks
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddSqlite<WalksDbContext>(connectionStringWalks);
 builder.Services.AddSqlite<WalksAuthDbContext>(connectionStringWalksAuth);
+
 builder.Services.AddScoped<IRegionRepository, SQLiteRegionRepository>();
 builder.Services.AddScoped<IWalkRepository, SQLiteWalkRepository>();
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
+builder.Services.AddScoped<IImageRepository, LocalImageRepository>();
+
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 builder.Services.AddIdentityCore<IdentityUser>()
     .AddRoles<IdentityRole>()

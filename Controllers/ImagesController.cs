@@ -6,6 +6,13 @@ namespace Walks.Models.Domain;
 [Route("[controller]")]
 public class ImagesController : ControllerBase
 {
+    private readonly IImageRepository imageRepository;
+    public ImagesController(IImageRepository imageRepository)
+    {
+        this.imageRepository = imageRepository;
+    }
+
+
     [HttpPost(Name = "Upload")]
     public async Task<IActionResult> Upload([FromForm] ImageUploadDto imageUploadDto)
     {
@@ -15,7 +22,20 @@ public class ImagesController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        return Ok();
+        // Convert DTO to domain model
+        var imageModel = new Image
+        {
+            File = imageUploadDto.File,
+            FileExtension = Path.GetExtension(imageUploadDto.File.FileName),
+            FileSizeInBytes = imageUploadDto.File.Length,
+            FileName = imageUploadDto.FileName,
+            FileDescription = imageUploadDto.FileDescription
+        };
+
+        // Upload image
+        await imageRepository.Upload(imageModel);
+
+        return Ok(imageModel);
     }
 
     private void ValidateFileUpload(ImageUploadDto imageUploadDto)
