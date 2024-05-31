@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Walks.Repositories;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using System.Text.Json;
 
 namespace Walks.Controllers;
 
@@ -17,21 +18,30 @@ public class RegionsController : ControllerBase
     private readonly WalksDbContext dbContext;
     private readonly IRegionRepository regionRepository;
     private readonly IMapper mapper;
+    private readonly ILogger<RegionsController> logger;
 
-    public RegionsController(WalksDbContext dbContext, IRegionRepository regionRepository, IMapper mapper)
+    public RegionsController(WalksDbContext dbContext, IRegionRepository regionRepository, IMapper mapper, ILogger<RegionsController> logger)
     {
         this.dbContext = dbContext;
         this.regionRepository = regionRepository;
         this.mapper = mapper;
+        this.logger = logger;
     }
 
     // GET ALL REGIONS
     [HttpGet(Name = "GetAllRegions")]
-    [Authorize(Roles = "Reader")]
+    // [Authorize(Roles = "Reader")]
     public async Task<IActionResult> GetAll()
     {
+        // Logging
+        logger.LogInformation("Getting all regions method was called");
+
         // Get data from db
         var regionsModel = await regionRepository.GetAllAsync();
+
+        // Logging
+        logger.LogInformation($"Regions retrieved successfully, with data: {JsonSerializer.Serialize(regionsModel)}");
+
         // Map domain models to DTOs
         var regionsDTO = mapper.Map<List<RegionDTO>>(regionsModel);
 

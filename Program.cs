@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using Walks.Data;
 using Walks.Mappings;
 using Walks.Models.Domain;
@@ -11,6 +12,12 @@ using Walks.Models.DTO;
 using Walks.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var logger = new LoggerConfiguration().WriteTo.Console().MinimumLevel.Information().CreateLogger();
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
+
+
 var connectionStringWalks = builder.Configuration.GetConnectionString("Walks") ?? "Data Source=Walks.db";
 var connectionStringWalksAuth = builder.Configuration.GetConnectionString("WalksAuth") ?? "Data Source=WalksAuth.db";
 
